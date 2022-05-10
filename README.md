@@ -17,4 +17,4 @@ npx hardhat verify --network rinkeby --constructor-args arguments.js ContractAdd
 - [https://github.com/ultrastable-money/Candidates/blob/e081dfb68913be4aacbdfb0d7867a55e92860d6f/contracts/StakingRewardsFactory.sol#L72] 
   totalSupply should be used instead of periodFinish.
 
-- Added SPDX-License-Identifier on all contracts, and updated dependencies.
+- Added SPDX-License-Identifier on all contracts, and updated dependencies.git
