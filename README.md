@@ -1,15 +1,14 @@
-# Basic Sample Hardhat Project
+# StakingRewardsFactory Test
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+## Install
 
-Try running some of the following tasks:
+- npm install
 
-```shell
-npx hardhat accounts
+## Instructions
+
 npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+npx hardhat deploy --network rinkeby
+npx hardhat verify --network rinkeby --constructor-args arguments.js ContractAddress 
+
+## Result
+[https://rinkeby.etherscan.io/address/0x266571c50E064F8Fbc219306d09C72FDBA4c0dF4]
