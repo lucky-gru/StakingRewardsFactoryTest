@@ -1,9 +1,10 @@
-pragma solidity ^0.8.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.1;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
-import "@openzeppelin/contracts/math/Math.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/utils/math/Math.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
@@ -39,7 +40,7 @@ contract StakingRewards is
     address _rewardsDistribution,
     address _rewardsToken,
     address _stakingToken
-  ) public {
+  ) {
     rewardsToken = IERC20(_rewardsToken);
     stakingToken = IERC20(_stakingToken);
     rewardsDistribution = _rewardsDistribution;
@@ -69,17 +70,20 @@ contract StakingRewards is
           .sub(lastUpdateTime)
           .mul(rewardRate)
           .mul(1e24)
-          .div(periodFinish)
+          .div(_totalSupply)
       );
-  }
+    }
 
-  function earned(address account) public view override returns (uint256) {
-    return
-      _balances[account]
-        .mul(rewardPerToken().sub(userRewardPerTokenPaid[account]))
-        .div(1e24)
-        .add(rewards[account]);
-  }
+    // function getRewardForDuration() public view override returns (uint256) {
+    // }
+
+    function viewLockingTimeStamp() public view override returns (uint256) {
+      return _lockingTimeStamp[msg.sender];
+    }
+
+    function earned(address account) public view override returns (uint256) {
+      return _balances[account].mul(rewardPerToken().sub(userRewardPerTokenPaid[account])).div(1e24).add(rewards[account]);
+    }
 
   /* ========== MUTATIVE FUNCTIONS ========== */
 
@@ -174,7 +178,7 @@ contract StakingRewards is
     emit RewardAdded(reward, periodFinish);
   }
 
-  /* ========== MODIFIERS ========== */
+      /* ========== MODIFIERS ========== */
 
   modifier updateReward(address account) {
     rewardPerTokenStored = rewardPerToken();
@@ -204,7 +208,6 @@ contract StakingRewardsFactory is Ownable {
     public stakingRewardsInfoByStakingToken;
 
   constructor(address _rewardsToken, uint256 _stakingRewardsGenesis)
-    public
     Ownable()
   {
 

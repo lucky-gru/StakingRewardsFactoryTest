@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.1;
 
 interface IStakingRewards {
   // Views
@@ -13,7 +13,7 @@ interface IStakingRewards {
 
   function balanceOf(address account) external view returns (uint256);
 
-  function getRewardForDuration() external view returns (uint256);
+  // function getRewardForDuration() external view returns (uint256);
 
   function viewLockingTimeStamp() external view returns (uint256);
 
